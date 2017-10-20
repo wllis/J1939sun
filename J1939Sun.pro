@@ -11,6 +11,10 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = J1939Sun
 TEMPLATE = app
 
+##说明：根据不同的can盒加载相应的驱动
+win32:LIBS += -L$$PWD/lib/controlcan -lControlCAN
+DEFINES += USE_CONTROLCAN
+
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which as been marked as deprecated (the exact warnings
 # depend on your compiler). Please consult the documentation of the
@@ -23,10 +27,21 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 
+INCLUDEPATH += lib \
+                j1939
+
 SOURCES += src/main.cpp\
         src/mainwindow.cpp
 
-HEADERS  += src/mainwindow.h
+#SOURCES += j1939/J1939.c
+
+HEADERS  += src/mainwindow.h \
+            lib/can_config.h
+
+#HEADERS += j1939/J1939.H j1939/J1939_Config.H
+
+##说明：根据不同的can盒加载相应的头文件
+HEADERS += lib/controlcan/ControlCAN.h
 
 FORMS    += src/mainwindow.ui
 
