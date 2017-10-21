@@ -3,7 +3,8 @@
 
 #include <QMainWindow>
 
-//#include "can_config.h"
+#include "can_config.h"
+#include "./j1939/J1939.H"
 
 namespace Ui {
 class MainWindow;

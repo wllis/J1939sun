@@ -31,14 +31,18 @@ INCLUDEPATH += lib \
                 j1939
 
 SOURCES += src/main.cpp\
-        src/mainwindow.cpp
+        src/mainwindow.cpp \
+    j1939/J1939.cpp
 
-#SOURCES += j1939/J1939.c
+
 
 HEADERS  += src/mainwindow.h \
-            lib/can_config.h
+            lib/can_config.h \
+    j1939/J1939.H \
+    j1939/J1939_Config.H \
+    lib/ECAN/ECanVci.h
 
-#HEADERS += j1939/J1939.H j1939/J1939_Config.H
+
 
 ##说明：根据不同的can盒加载相应的头文件
 HEADERS += lib/controlcan/ControlCAN.h

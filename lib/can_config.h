@@ -1,9 +1,17 @@
 #ifndef CAN_CONFIG_H
 #define CAN_CONFIG_H
 
-// 说明：根据不同的can盒子调用不同的接口，为适配层
+// 说明：根据不同的can盒子调用不同的接口，为适配层,
+// 后面来解决CAN盒子的动态适配问题
 
-#ifdef USE_CONTROLCAN
+#if 1
+
+#include "./ECAN/ECanVci.h"
+
+#endif
+
+
+#if 0
 #include "controlcan/ControlCAN.h"
 
 //#define VCI_CAN_OBJ CAN_OBJ
