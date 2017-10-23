@@ -4,17 +4,17 @@
 // 说明：根据不同的can盒子调用不同的接口，为适配层,
 // 后面来解决CAN盒子的动态适配问题
 
-#if 1
+#if USR_ECAN
 
 #include "./ECAN/ECanVci.h"
 
 #endif
 
 
-#if 0
+#if USE_CONTROLCAN
 #include "controlcan/ControlCAN.h"
 
-//#define VCI_CAN_OBJ CAN_OBJ
+#define CAN_OBJ VCI_CAN_OBJ
 
 #define OpenDevice(DeviceType, DeviceInd, Reserved)  VCI_OpenDevice( DeviceType, DeviceInd, Reserved)
 #define  CloseDevice( DeviceType, DeviceInd) VCI_CloseDevice( DeviceType, DeviceInd)

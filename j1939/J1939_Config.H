@@ -29,10 +29,18 @@
 #ifndef __J1939_Config_H
 #define __J1939_Config_H
 
+#ifdef USER_ECAN
+
 #pragma comment (lib,"../j1939Sun/lib/ECAN/ECanVci.lib")
 
 #include "../lib/ECAN/ECanVci.h" //加入要移植的硬件驱动接口头文件
+#endif
 
+#ifdef USE_CONTROLCAN
+#pragma comment (lib,"../j1939Sun/lib/controlcan/ControlCAN.lib")
+#include "../lib/can_config.h"
+
+#endif
 #include "J1939.H"
 
 
