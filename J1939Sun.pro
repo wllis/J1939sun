@@ -15,6 +15,7 @@ TEMPLATE = app
 win32:LIBS += -L$$PWD/lib/controlcan -lControlCAN
 DEFINES += USE_CONTROLCAN
 
+#win32:LIBS += -L$$PWD/lib/ECAN -lECanVci
 #DEFINES += USE_ECAN
 
 # The following define makes your compiler emit warnings if you use

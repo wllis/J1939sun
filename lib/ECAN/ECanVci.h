@@ -1,4 +1,4 @@
-#pragma execution_character_set("utf-8")
+ï»¿#pragma execution_character_set("utf-8")
 
 #ifndef _V_ECANVCI_H_                                        
 #define _V_ECANVCI_H_
@@ -6,37 +6,37 @@
 
 #include "windows.h"
 //#include "windef.h"//MinGW
-#include <QtDebug>
+
 
 #define Dll_EXPORTS
 
-//½Ó¿Ú¿¨ÀàĞÍ¶¨Òå
+//æ¥å£å¡ç±»å‹å®šä¹‰
 
 #define USBCAN1		3
 #define USBCAN2		4
 
-//CAN´íÎóÂë
-#define	ERR_CAN_OVERFLOW			0x0001	//CAN¿ØÖÆÆ÷ÄÚ²¿FIFOÒç³ö
-#define	ERR_CAN_ERRALARM			0x0002	//CAN¿ØÖÆÆ÷´íÎó±¨¾¯
-#define	ERR_CAN_PASSIVE				0x0004	//CAN¿ØÖÆÆ÷Ïû¼«´íÎó
-#define	ERR_CAN_LOSE				0x0008	//CAN¿ØÖÆÆ÷ÖÙ²Ã¶ªÊ§
-#define	ERR_CAN_BUSERR				0x0010	//CAN¿ØÖÆÆ÷×ÜÏß´íÎó
-#define	ERR_CAN_REG_FULL			0x0020	//CAN½ÓÊÕ¼Ä´æÆ÷Âú
-#define	ERR_CAN_REG_OVER			0x0040	//CAN½ÓÊÕ¼Ä´æÆ÷Òç³ö
-#define	ERR_CAN_ZHUDONG	    		0x0080	//CAN¿ØÖÆÆ÷Ö÷¶¯´íÎó
+//CANé”™è¯¯ç 
+#define	ERR_CAN_OVERFLOW			0x0001	//CANæ§åˆ¶å™¨å†…éƒ¨FIFOæº¢å‡º
+#define	ERR_CAN_ERRALARM			0x0002	//CANæ§åˆ¶å™¨é”™è¯¯æŠ¥è­¦
+#define	ERR_CAN_PASSIVE				0x0004	//CANæ§åˆ¶å™¨æ¶ˆæé”™è¯¯
+#define	ERR_CAN_LOSE				0x0008	//CANæ§åˆ¶å™¨ä»²è£ä¸¢å¤±
+#define	ERR_CAN_BUSERR				0x0010	//CANæ§åˆ¶å™¨æ€»çº¿é”™è¯¯
+#define	ERR_CAN_REG_FULL			0x0020	//CANæ¥æ”¶å¯„å­˜å™¨æ»¡
+#define	ERR_CAN_REG_OVER			0x0040	//CANæ¥æ”¶å¯„å­˜å™¨æº¢å‡º
+#define	ERR_CAN_ZHUDONG	    		0x0080	//CANæ§åˆ¶å™¨ä¸»åŠ¨é”™è¯¯
 
-//Í¨ÓÃ´íÎóÂë
-#define	ERR_DEVICEOPENED			0x0100	//Éè±¸ÒÑ¾­´ò¿ª
-#define	ERR_DEVICEOPEN				0x0200	//´ò¿ªÉè±¸´íÎó
-#define	ERR_DEVICENOTOPEN			0x0400	//Éè±¸Ã»ÓĞ´ò¿ª
-#define	ERR_BUFFEROVERFLOW			0x0800	//»º³åÇøÒç³ö
-#define	ERR_DEVICENOTEXIST			0x1000	//´ËÉè±¸²»´æÔÚ
-#define	ERR_LOADKERNELDLL			0x2000	//×°ÔØ¶¯Ì¬¿âÊ§°Ü
-#define ERR_CMDFAILED				0x4000	//Ö´ĞĞÃüÁîÊ§°Ü´íÎóÂë
-#define	ERR_BUFFERCREATE			0x8000	//ÄÚ´æ²»×ã
+//é€šç”¨é”™è¯¯ç 
+#define	ERR_DEVICEOPENED			0x0100	//è®¾å¤‡å·²ç»æ‰“å¼€
+#define	ERR_DEVICEOPEN				0x0200	//æ‰“å¼€è®¾å¤‡é”™è¯¯
+#define	ERR_DEVICENOTOPEN			0x0400	//è®¾å¤‡æ²¡æœ‰æ‰“å¼€
+#define	ERR_BUFFEROVERFLOW			0x0800	//ç¼“å†²åŒºæº¢å‡º
+#define	ERR_DEVICENOTEXIST			0x1000	//æ­¤è®¾å¤‡ä¸å­˜åœ¨
+#define	ERR_LOADKERNELDLL			0x2000	//è£…è½½åŠ¨æ€åº“å¤±è´¥
+#define ERR_CMDFAILED				0x4000	//æ‰§è¡Œå‘½ä»¤å¤±è´¥é”™è¯¯ç 
+#define	ERR_BUFFERCREATE			0x8000	//å†…å­˜ä¸è¶³
 
 
-//º¯Êıµ÷ÓÃ·µ»Ø×´Ì¬Öµ
+//å‡½æ•°è°ƒç”¨è¿”å›çŠ¶æ€å€¼
 #define	STATUS_OK					1
 #define STATUS_ERR					0
 	
@@ -45,7 +45,7 @@
 #define CMD_CHGDESIPANDPORT		2
 
 
-//1.ZLGCANÏµÁĞ½Ó¿Ú¿¨ĞÅÏ¢µÄÊı¾İÀàĞÍ¡£
+//1.ZLGCANç³»åˆ—æ¥å£å¡ä¿¡æ¯çš„æ•°æ®ç±»å‹ã€‚
 typedef  struct  _BOARD_INFO{
 		USHORT	hw_Version;
 		USHORT	fw_Version;
@@ -58,20 +58,20 @@ typedef  struct  _BOARD_INFO{
 		USHORT	Reserved[4];
 } BOARD_INFO,*P_BOARD_INFO; 
 
-//2.¶¨ÒåCANĞÅÏ¢Ö¡µÄÊı¾İÀàĞÍ¡£
+//2.å®šä¹‰CANä¿¡æ¯å¸§çš„æ•°æ®ç±»å‹ã€‚
 typedef  struct  _CAN_OBJ{
 	UINT	ID;
 	UINT	TimeStamp;
 	BYTE	TimeFlag;
 	BYTE	SendType;
-	BYTE	RemoteFlag;//ÊÇ·ñÊÇÔ¶³ÌÖ¡
-	BYTE	ExternFlag;//ÊÇ·ñÊÇÀ©Õ¹Ö¡
+	BYTE	RemoteFlag;//æ˜¯å¦æ˜¯è¿œç¨‹å¸§
+	BYTE	ExternFlag;//æ˜¯å¦æ˜¯æ‰©å±•å¸§
 	BYTE	DataLen;
 	BYTE	Data[8];
 	BYTE	Reserved[3];
 }CAN_OBJ,*P_CAN_OBJ;
 
-//3.¶¨ÒåCAN¿ØÖÆÆ÷×´Ì¬µÄÊı¾İÀàĞÍ¡£
+//3.å®šä¹‰CANæ§åˆ¶å™¨çŠ¶æ€çš„æ•°æ®ç±»å‹ã€‚
 typedef struct _CAN_STATUS{
 	UCHAR	ErrInterrupt;
 	UCHAR	regMode;
@@ -84,14 +84,14 @@ typedef struct _CAN_STATUS{
 	DWORD	Reserved;
 }CAN_STATUS,*P_CAN_STATUS;
 
-//4.¶¨Òå´íÎóĞÅÏ¢µÄÊı¾İÀàĞÍ¡£
+//4.å®šä¹‰é”™è¯¯ä¿¡æ¯çš„æ•°æ®ç±»å‹ã€‚
 typedef struct _ERR_INFO{
 		UINT	ErrCode;
 		BYTE	Passive_ErrData[3];
 		BYTE	ArLost_ErrData;
 } ERR_INFO,*P_ERR_INFO;
 
-//5.¶¨Òå³õÊ¼»¯CANµÄÊı¾İÀàĞÍ
+//5.å®šä¹‰åˆå§‹åŒ–CANçš„æ•°æ®ç±»å‹
 typedef struct _INIT_CONFIG{
 	DWORD	AccCode;
 	DWORD	AccMask;
@@ -111,7 +111,7 @@ typedef struct _tagChgDesIPAndPort
 
 ///////// new add struct for filter /////////
 typedef struct _FILTER_RECORD{
-	DWORD ExtFrame;	//ÊÇ·ñÎªÀ©Õ¹Ö¡
+	DWORD ExtFrame;	//æ˜¯å¦ä¸ºæ‰©å±•å¸§
 	DWORD Start;
 	DWORD End;
 }FILTER_RECORD,*P_FILTER_RECORD;
@@ -151,235 +151,6 @@ EXTERNC DllAPI DWORD CALL ResetCAN(DWORD DeviceType,DWORD DeviceInd,DWORD CANInd
 EXTERNC DllAPI ULONG CALL Transmit(DWORD DeviceType,DWORD DeviceInd,DWORD CANInd,P_CAN_OBJ pSend,ULONG Len);
 EXTERNC DllAPI ULONG CALL Receive(DWORD DeviceType,DWORD DeviceInd,DWORD CANInd,P_CAN_OBJ pReceive,ULONG Len,INT WaitTime);
 
-class ECan
-{
-public:
-    /*Éè±¸ºÅ*/
-    int nDeviceType; // USBCAN-II
-    /*ÒıË÷ºÅ*/
-    int nDeviceInd;
-    /*Í¨³£ÉèÎª0*/
-    int nReserved;
-    /*canÍ¨µÀºÅ^can1 = 1,can2 = 2^*/
-    int nCANInd;
-    /*ÅäÖÃ³õÊ¼»¯½á¹¹Ìå*/
-    INIT_CONFIG vic;
-    /*USBCANµÄĞÅÏ¢½á¹¹Ìå*/
-    BOARD_INFO vbi;
-    /*·¢ËÍÊı¾İ½á¹¹Ìå*/
-    CAN_OBJ nTransmitData;
-    /*ÓÃÓÚ½ÓÊÜÊı¾İµÄ½á¹¹Ìå*/
-    CAN_OBJ nReceiveData[100];  //ÔİÊ±ÓÃ100¸ö
-    /*½ÓÊÜ³¬Ê±Ê±¼ä,ÒÔºÁÃëÎªµ¥Î»*/
-    BYTE nReceiveTime;
-public:
-    ECan()
-    {
-        nDeviceType = 4; // USBCAN-II
-        nDeviceInd = 0;  // Ä¬ÈÏÎª0
-        nReserved = 0;   // Ä¬ÈÏÎª0
-        nCANInd = 0;
-        nReceiveTime = 250;
 
-        ZeroMemory(&vic, sizeof(INIT_CONFIG));
-        ZeroMemory(&vbi, sizeof(BOARD_INFO));
-        ZeroMemory(&nTransmitData, sizeof(CAN_OBJ));
-        vic.AccMask = 0xffffffff;
-        vic.Filter = 0;//²»Ê¹ÄÜÂË²¨
-        vic.Mode = 0; //0±íÊ¾Õı³£Ä£Ê½£¬1±íÊ¾Ö»ÌıÄ£Ê½
-        /*´ú±í²¨ÌØÂÊÎª250Kbps*/
-        vic.Timing0 = 0x01;
-        vic.Timing1 = 0x1c;
-
-        DWORD dwRel;
-        Sleep(100);
-        dwRel = ECanOpenDevice();
-        if (dwRel != STATUS_OK)
-        {
-            qDebug() << "´ò¿ªUSBCANÊ§°Ü\n";
-            return ;
-        }
-        else
-        {
-            qDebug() << "´ò¿ªUSBCAN³É¹¦\n";
-        }
-        Sleep(100);
-        dwRel = ECanInitCAN();
-        Sleep(100);
-        ClearBuffer(nDeviceType, nDeviceInd, nCANInd);
-        if (dwRel != STATUS_OK)
-        {
-            qDebug() << "³õÊ¼»¯USBCANÊ§°Ü\n";
-            ECanCloseDevice();
-            qDebug() << "USBCANÉè±¸ÒÑ¾­¹Ø±Õ\n";
-            return ;
-        }
-        else
-        {
-            qDebug() << "³õÊ¼»¯USBCAN³É¹¦\n";
-        }
-        Sleep(100);
-        dwRel = ECanReadBoardInfo();
-        if(dwRel != STATUS_OK)
-        {
-            qDebug() << "¶ÁÈ¡USBCANµÄ»ù´¡ĞÅÏ¢Ê§°Ü\n";
-            ZeroMemory(&vbi, sizeof(BOARD_INFO));
-        }
-        else
-        {
-            qDebug() << "¶ÁÈ¡USBCANµÄ»ù´¡ĞÅÏ¢³É¹¦\n";
-        }
-        Sleep(100);
-        dwRel = ECanStartCAN();
-        if (dwRel != STATUS_OK)
-        {
-            qDebug() << "USBCANÆô¶¯Ê§°Ü\n";
-            ZeroMemory(&vbi, sizeof(BOARD_INFO));
-            ECanCloseDevice();
-            qDebug() << "USBCANÉè±¸ÒÑ¾­¹Ø±Õ\n";
-        }
-        else
-        {
-            qDebug() << "USBCANÆô¶¯³É¹¦\n";
-        }
-        Sleep(1000);
-    }
-    ~ECan()
-    {
-        ECanCloseDevice();
-    }
-    void ECanReset()
-    {
-        nDeviceType = 4; // USBCAN-II
-        nDeviceInd = 0;  // Ä¬ÈÏÎª0
-        nReserved = 0;   // Ä¬ÈÏÎª0
-        nCANInd = 0;
-        nReceiveTime = 250;
-
-        ZeroMemory(&vic, sizeof(INIT_CONFIG));
-        ZeroMemory(&vbi, sizeof(BOARD_INFO));
-        ZeroMemory(&nTransmitData, sizeof(CAN_OBJ));
-        vic.AccMask = 0xffffffff;
-        vic.Filter = 0;//²»Ê¹ÄÜÂË²¨
-        vic.Mode = 0; //0±íÊ¾Õı³£Ä£Ê½£¬1±íÊ¾Ö»ÌıÄ£Ê½
-                      /*´ú±í²¨ÌØÂÊÎª250Kbps*/
-        vic.Timing0 = 0x01;
-        vic.Timing1 = 0x1c;
-
-        DWORD dwRel;
-        Sleep(100);
-        dwRel = ECanOpenDevice();
-        if (dwRel != STATUS_OK)
-        {
-            qDebug() << "´ò¿ªUSBCANÊ§°Ü\n";
-            return;
-        }
-        else
-        {
-            qDebug() << "´ò¿ªUSBCAN³É¹¦\n";
-        }
-        Sleep(100);
-        dwRel = ECanInitCAN();
-        Sleep(100);
-        ClearBuffer(nDeviceType, nDeviceInd, nCANInd);
-        if (dwRel != STATUS_OK)
-        {
-            qDebug() << "³õÊ¼»¯USBCANÊ§°Ü\n";
-            ECanCloseDevice();
-            qDebug() << "USBCANÉè±¸ÒÑ¾­¹Ø±Õ\n";
-            return;
-        }
-        else
-        {
-            qDebug() << "³õÊ¼»¯USBCAN³É¹¦\n";
-        }
-        Sleep(100);
-        dwRel = ECanReadBoardInfo();
-        if (dwRel != STATUS_OK)
-        {
-            qDebug() << "¶ÁÈ¡USBCANµÄ»ù´¡ĞÅÏ¢Ê§°Ü\n";
-            ZeroMemory(&vbi, sizeof(BOARD_INFO));
-        }
-        else
-        {
-            qDebug() << "¶ÁÈ¡USBCANµÄ»ù´¡ĞÅÏ¢³É¹¦\n";
-        }
-        Sleep(100);
-        dwRel = ECanStartCAN();
-        if (dwRel != STATUS_OK)
-        {
-            qDebug() << "USBCANÆô¶¯Ê§°Ü\n";
-            ZeroMemory(&vbi, sizeof(BOARD_INFO));
-            ECanCloseDevice();
-            qDebug() << "USBCANÉè±¸ÒÑ¾­¹Ø±Õ\n";
-        }
-        else
-        {
-            qDebug() << "USBCANÆô¶¯³É¹¦\n";
-        }
-        Sleep(1000);
-    }
-    DWORD ECanOpenDevice()
-    {
-        return OpenDevice(nDeviceType, nDeviceInd, nReserved);
-    }
-    DWORD ECanCloseDevice()
-    {
-        return CloseDevice(nDeviceType, nDeviceInd);
-    }
-    DWORD ECanInitCAN()
-    {
-        return InitCAN(nDeviceType, nDeviceInd, nCANInd,&vic);
-    }
-    DWORD ECanStartCAN()
-    {
-        return StartCAN(nDeviceType, nDeviceInd, nCANInd);
-    }
-    DWORD ECanTransmit(UINT id,BYTE sendtype, BYTE remoteflag, BYTE externflag, BYTE datalen,BYTE data[8])
-    {
-        nTransmitData.ID = id;
-        nTransmitData.SendType = sendtype;        //·¢ËÍÖ¡ÀàĞÍ
-        nTransmitData.RemoteFlag = remoteflag;    //ÊÇ·ñÊÇÔ¶³ÌÖ¡ =0Ê±ÎªÊı¾İÖ¡£¬=1Ê±ÎªÔ¶³ÌÖ¡
-        nTransmitData.ExternFlag = externflag;    //ÊÇ·ñÊÇÀ©Õ¹Ö¡ =0Ê±Îª±ê×¼Ö¡£¨11Î»Ö¡ID£©=1Ê±ÎªÀ©Õ¹Ö¡£¨29Î»Ö¡ID£©
-        nTransmitData.DataLen = datalen;          //Êı¾İ³¤¶È    <=8
-        int i = 0;
-        for (i = 0; i < datalen; i++)
-        {
-            nTransmitData.Data[i] = data[i];
-        }
-        for ( ; i < 8; i++)
-        {
-            nTransmitData.Data[i] =0xff;
-        }
-        return Transmit(nDeviceType, nDeviceInd, nCANInd,&nTransmitData, 1);
-    }
-    /*µ÷ÓÃº¯Êıºó£¬Êı¾İ½«´æÈënReceiveData[]»º´æ*/
-    DWORD ECanReceive()
-    {
-        /*»º´æÇåÁã*/
-        Sleep(100);
-    //	ECanStartCAN();
-        int DwRel = GetReceiveNum(nDeviceType, nDeviceInd, nCANInd);
-        for (int i = 0; i < DwRel; i++)
-        {
-            ZeroMemory((nReceiveData + i), sizeof(CAN_OBJ));
-        }
-        if(DwRel != 0)
-        {
-            /*·µ»ØÊµ¼Ê¶ÁÈ¡µ½µÄÖ¡Êı¡£Èç¹û·µ»ØÖµÎª0xFFFFFFFF£¬Ôò±íÊ¾¶ÁÈ¡Êı¾İÊ§°Ü£¬ÓĞ´íÎó·¢Éú£¬Çëµ÷ÓÃReadErrInfoº¯ÊıÀ´»ñÈ¡´íÎóÂë*/
-            int DwRell = Receive(nDeviceType, nDeviceInd, nCANInd, nReceiveData, 100, nReceiveTime);
-            ClearBuffer(nDeviceType, nDeviceInd, nCANInd);
-        //	ResetCAN(nDeviceType, nDeviceInd, nCANInd);
-            return  DwRell;
-        }
-        //ResetCAN(nDeviceType, nDeviceInd, nCANInd);
-
-        return 0;
-    }
-    DWORD ECanReadBoardInfo()
-    {
-        return ReadBoardInfo(nDeviceType, nDeviceInd, &vbi);
-    }
-};
 
 #endif

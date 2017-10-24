@@ -29,18 +29,10 @@
 #ifndef __J1939_Config_H
 #define __J1939_Config_H
 
-#ifdef USER_ECAN
 
-#pragma comment (lib,"../j1939Sun/lib/ECAN/ECanVci.lib")
 
-#include "../lib/ECAN/ECanVci.h" //加入要移植的硬件驱动接口头文件
-#endif
-
-#ifdef USE_CONTROLCAN
-#pragma comment (lib,"../j1939Sun/lib/controlcan/ControlCAN.lib")
 #include "../lib/can_config.h"
 
-#endif
 #include "J1939.H"
 
 
@@ -157,7 +149,7 @@ void J1939_CAN_Transmit(J1939_MESSAGE *MsgPtr)
     }
 
     /*选着USBCAN-II,设备号通道号默认为零，这里与选取的设备类型相关*/
-    Transmit(4, 0, 0, &nTransmitData, 1);//开始发送数据
+    CANDriveTransmit(4, 0, 0, &nTransmitData, 1);//开始发送数据
 }
 /*
 *输入：J1939_MESSAGE *MsgPtr 数据要存入的内存的指针
@@ -176,12 +168,12 @@ int J1939_CAN_Receive(J1939_MESSAGE *MsgPtr)
     static unsigned char ReceiveNum = 0;
     static unsigned char Receive_p = 0;
 
-    int DwRel = GetReceiveNum(4, 0, 0);
+    int DwRel = CANDriveGetReceiveNum(4, 0, 0);
     if (DwRel)
     {
         /*返回实际读取到的帧数。如果返回值为0xFFFFFFFF，则表示读取数据失败，有错误发生，请调用ReadErrInfo函数来获取错误码*/
-        Receive(4, 0, 0, (nReceiveData + ReceiveNum), 100, 250);
-        ClearBuffer(4, 0, 0);
+        CANDriveReceive(4, 0, 0, (nReceiveData + ReceiveNum), 100, 250);
+        CANDriveClearBuffer(4, 0, 0);
     }
 
     //ResetCAN(nDeviceType, nDeviceInd, nCANInd);
