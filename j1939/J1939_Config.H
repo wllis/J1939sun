@@ -123,33 +123,15 @@ void ChangeGroupIDofLMO()
 void J1939_CAN_Transmit(J1939_MESSAGE *MsgPtr)
 {
     char _i = 0;
-    /*发送数据结构体*/
-    CAN_OBJ nTransmitData;
-    ZeroMemory(&nTransmitData, sizeof(CAN_OBJ));
+    UINT ID = 0;
 
     /*加载29位ID*/
     for (_i = 0; _i<4; _i++)
     {
-        nTransmitData.ID = (nTransmitData.ID << 8) + MsgPtr->Array[_i];
+        ID = (ID << 8) + MsgPtr->Array[_i];
     }
-
-    nTransmitData.SendType = 0;       //发送帧类型
-    nTransmitData.RemoteFlag = 0;    //是否是远程帧 =0时为数据帧，=1时为远程帧
-    nTransmitData.ExternFlag = 1;    //是否是扩展帧 =0时为标准帧（11位帧ID）=1时为扩展帧（29位帧ID）
-    /*加载数据长度*/
-    nTransmitData.DataLen = MsgPtr->Mxe.DataLength;    //数据长度    <=8
-    /*加载数据*/
-    for (_i = 0; _i < nTransmitData.DataLen; _i++)
-    {
-        nTransmitData.Data[_i] = MsgPtr->Mxe.Data[_i];
-    }
-    for (; _i < 8; _i++)
-    {
-        nTransmitData.Data[_i] = 0xff;
-    }
-
-    /*选着USBCAN-II,设备号通道号默认为零，这里与选取的设备类型相关*/
-    CANDriveTransmit(4, 0, 0, &nTransmitData, 1);//开始发送数据
+    /*默认发送帧类型为数据0，远程帧,扩展帧*/
+    MYCAN->ECanTransmit(ID,0,0,1,MsgPtr->Mxe.DataLength,MsgPtr->Mxe.Data);
 }
 /*
 *输入：J1939_MESSAGE *MsgPtr 数据要存入的内存的指针
@@ -157,70 +139,66 @@ void J1939_CAN_Transmit(J1939_MESSAGE *MsgPtr)
 *说明：读取CAN驱动的数据，如果没有数据，返回0
         将设备CAN中的数据取出，存入J1939_MESSAGE结构体中
 */
-
-/*用于接受数据的结构体*/
-CAN_OBJ nReceiveData[100];  //暂时用100个报作为邮箱
-
 int J1939_CAN_Receive(J1939_MESSAGE *MsgPtr)
 {
-    int _i = 0;
-    unsigned int _id = 0;
-    static unsigned char ReceiveNum = 0;
-    static unsigned char Receive_p = 0;
+    static int Receive_p = 0;
+    static int ReceiveNum = 0;
 
-    int DwRel = CANDriveGetReceiveNum(4, 0, 0);
-    if (DwRel)
-    {
-        /*返回实际读取到的帧数。如果返回值为0xFFFFFFFF，则表示读取数据失败，有错误发生，请调用ReadErrInfo函数来获取错误码*/
-        CANDriveReceive(4, 0, 0, (nReceiveData + ReceiveNum), 100, 250);
-        CANDriveClearBuffer(4, 0, 0);
-    }
+    int DwRel = MYCAN->ECanReceive();
 
-    //ResetCAN(nDeviceType, nDeviceInd, nCANInd);
-    ReceiveNum = ReceiveNum + DwRel;
-    if (ReceiveNum > 99)/*接受数据过快，数据溢出*/
+    if(DwRel == 0)
     {
-        ReceiveNum = 0;
-        Receive_p = 0;
-    }
-    if (Receive_p == ReceiveNum)/*刷新缓存*/
-    {
-        if (Receive_p)
+
+        if (ReceiveNum > 99)/*接受数据过快，数据溢出*/
         {
-            /*缓存清零*/
-            for (int _i = 0; _i < (Receive_p); _i++)
-            {
-                ZeroMemory((nReceiveData + _i), sizeof(CAN_OBJ));
-            }
+            ReceiveNum = 0;
+            Receive_p = 0;
         }
-        ReceiveNum = 0;
-        Receive_p = 0;
-    }
+        if (Receive_p == ReceiveNum)/*刷新缓存*/
+        {
+            if (Receive_p)
+            {
+                /*缓存清零*/
+                for (int _i = 0; _i < (Receive_p); _i++)
+                {
+                    ZeroMemory((MYCAN->nReceiveData + _i), sizeof(CAN_OBJ));
+                }
+            }
+            ReceiveNum = 0;
+            Receive_p = 0;
+        }
+        if (Receive_p < ReceiveNum)
+        {
+            //将29位标志位写入J1939的结构中
 
-    if (Receive_p < ReceiveNum)
-    {
-        //将29位标志位写入J1939的结构中
-        _id = (nReceiveData[Receive_p].ID);
-        MsgPtr->Array[0] = _id >> (8 * 3);
-        MsgPtr->Array[1] = _id >> (8 * 2);
-        MsgPtr->Array[2] = _id >> (8 * 1);
-        MsgPtr->Array[3] = _id >> (8 * 0);
-        //读取数据长度
-        MsgPtr->Mxe.DataLength = 8;//j1939协议有规定，强行置8
-                                   //读取数据
-        MsgPtr->Mxe.Data[0] = nReceiveData[Receive_p].Data[0];
-        MsgPtr->Mxe.Data[1] = nReceiveData[Receive_p].Data[1];
-        MsgPtr->Mxe.Data[2] = nReceiveData[Receive_p].Data[2];
-        MsgPtr->Mxe.Data[3] = nReceiveData[Receive_p].Data[3];
-        MsgPtr->Mxe.Data[4] = nReceiveData[Receive_p].Data[4];
-        MsgPtr->Mxe.Data[5] = nReceiveData[Receive_p].Data[5];
-        MsgPtr->Mxe.Data[6] = nReceiveData[Receive_p].Data[6];
-        MsgPtr->Mxe.Data[7] = nReceiveData[Receive_p].Data[7];
+            UINT _id = (MYCAN->nReceiveData[Receive_p].ID);
+            MsgPtr->Array[0] = _id >> (8 * 3);
+            MsgPtr->Array[1] = _id >> (8 * 2);
+            MsgPtr->Array[2] = _id >> (8 * 1);
+            MsgPtr->Array[3] = _id >> (8 * 0);
+            //读取数据长度
+            MsgPtr->Mxe.DataLength = 8;//j1939协议有规定，强行置8
+                                       //读取数据
+            MsgPtr->Mxe.Data[0] = MYCAN->nReceiveData[Receive_p].Data[0];
+            MsgPtr->Mxe.Data[1] = MYCAN->nReceiveData[Receive_p].Data[1];
+            MsgPtr->Mxe.Data[2] = MYCAN->nReceiveData[Receive_p].Data[2];
+            MsgPtr->Mxe.Data[3] = MYCAN->nReceiveData[Receive_p].Data[3];
+            MsgPtr->Mxe.Data[4] = MYCAN->nReceiveData[Receive_p].Data[4];
+            MsgPtr->Mxe.Data[5] = MYCAN->nReceiveData[Receive_p].Data[5];
+            MsgPtr->Mxe.Data[6] = MYCAN->nReceiveData[Receive_p].Data[6];
+            MsgPtr->Mxe.Data[7] = MYCAN->nReceiveData[Receive_p].Data[7];
 
-        Receive_p++;
-        return  1;
+            Receive_p++;
+            return  1;
+        }
+    }else{
+        /*说明重新读取到新的数据，原有的数据被覆盖*/
+        if(ReceiveNum != 0){
+            ReceiveNum = 0;
+            Receive_p = 0;
+        }
+        ReceiveNum = ReceiveNum + DwRel;
     }
-    //ResetCAN(nDeviceType, nDeviceInd, nCANInd);
     //没有数据
     return 0;
 }

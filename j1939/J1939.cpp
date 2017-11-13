@@ -253,7 +253,6 @@ j1939_uint8_t J1939_DequeueMessage( J1939_MESSAGE *MsgPtr )
 j1939_uint8_t J1939_EnqueueMessage( J1939_MESSAGE *MsgPtr )   
 {   
     j1939_uint8_t   rc = RC_SUCCESS;   
-
 #if J1939_POLL_ECAN == J1939_FALSE  
     Port_TXinterruptDisable();
 #endif 
@@ -261,7 +260,7 @@ j1939_uint8_t J1939_EnqueueMessage( J1939_MESSAGE *MsgPtr )
     if (J1939_Flags.CannotClaimAddress)   
         rc = RC_CANNOTTRANSMIT;   
     else   
-    {   
+    {    
         if ((J1939_OVERWRITE_TX_QUEUE == J1939_TRUE) ||   
              (TXQueueCount < J1939_TX_QUEUE_SIZE))   
         {   
