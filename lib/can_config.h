@@ -44,9 +44,10 @@ typedef struct {
 
 }ITRFN; //interface name
 
-// 以后在析构函数中解决，动态加载那个can盒子
 class USBCAN
 {
+public:
+    int isInitiateSucceed; //CAN初始化成功
 private:
     int nDeviceType; //设备号
     int nDeviceInd;  //引索号
@@ -96,6 +97,7 @@ public:
         /*加载CAN盒子的动态库*/
         CANLIB = LoadLibraryA(interfaceNameStruct.dllname);
         if(CANLIB == NULL){
+            isInitiateSucceed = 0;
             qDebug() << "\nunable to loading dll";
             return ;
         }
@@ -115,6 +117,7 @@ public:
         dwRel = ECanOpenDevice();
         if (dwRel != STATUS_OK)
         {
+            isInitiateSucceed = 0;
             qDebug() << "打开USBCAN失败\n";
             return ;
         }
@@ -130,12 +133,15 @@ public:
         CANDriveClearBuffer = (funClearBuffer)GetProcAddress(CANLIB,INTERFACENAME.usbcanClearBuffer);
         if(CANDriveClearBuffer == NULL)
         {
+            isInitiateSucceed = 0;
             qDebug() << "\nunable to loading dll CANDriveClearBuffer";
             FreeLibrary(CANLIB);
+            return ;
         }
         CANDriveClearBuffer(nDeviceType, nDeviceInd, nCANInd);
         if (dwRel != STATUS_OK)
         {
+            isInitiateSucceed = 0;
             qDebug() << "初始化USBCAN失败\n";
             ECanCloseDevice();
             qDebug() << "USBCAN设备已经关闭\n";
@@ -149,8 +155,10 @@ public:
         dwRel = ECanReadBoardInfo();
         if(dwRel != STATUS_OK)
         {
+            isInitiateSucceed = 0;
             qDebug() << "读取USBCAN的基础信息失败\n";
             ZeroMemory(&vbi, sizeof(BOARD_INFO));
+            return ;
         }
         else
         {
@@ -160,16 +168,19 @@ public:
         dwRel = ECanStartCAN();
         if (dwRel != STATUS_OK)
         {
+            isInitiateSucceed = 0;
             qDebug() << "USBCAN启动失败\n";
             ZeroMemory(&vbi, sizeof(BOARD_INFO));
             ECanCloseDevice();
             qDebug() << "USBCAN设备已经关闭\n";
+            return ;
         }
         else
         {
             qDebug() << "USBCAN启动成功\n";
         }
         Sleep(1000);
+        isInitiateSucceed = 1; //成功启动
     }
     ~USBCAN()
     {

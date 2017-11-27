@@ -32,6 +32,11 @@ void login::on_pushButton_clicked(){
     /*开启一个CAN驱动，初始化一个CAN驱动*/
     MYCAN = new USBCAN(_DeviceType,_DeviceInd,_CANInd,_interfaceNameStruct);
 
+    if( !MYCAN->isInitiateSucceed){
+        QMessageBox::warning(this,tr("error"),tr("软件加载CAN盒子失败，请检查CAN盒子是否使用正确\n 如果PC机插入多个CAN盒子，请选择正确的索引号"),QMessageBox::Yes);
+        return ;
+    }
+
     /*记录本次配置参数*/
     setAutoConfig();
 
@@ -109,6 +114,8 @@ ITRFN login::returnCANinterface(int deviceType){
     if((deviceType == 1)|| (deviceType == 2)){
         return ECANinterfaceNameStruct;
     }
+    QMessageBox::warning(this,tr("错误"),tr("没有相应的CAN盒子驱动"),QMessageBox::Yes);
+    return ECANinterfaceNameStruct;//随便返回一个类型
 }
 
 void login::setAutoConfig(){
